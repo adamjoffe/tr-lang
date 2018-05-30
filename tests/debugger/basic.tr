@@ -1,0 +1,12 @@
+a = 1
+
+m() = "word";
+
+z(a,b) = print('none');
+
+f(word) :- 
+	true -> print(word) achieves f;
+
+main() :- 
+	falsecond : myCount == 0 -> myCount = 1, print("this rarely happens") achieves main;
+	true -> a = 2, f("hello"), z(1,2), print(m()), exit(true,"test success") achieves main;

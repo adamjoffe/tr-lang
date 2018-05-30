@@ -1,0 +1,42 @@
+// imports
+import enviro.tr
+import basic.tr
+
+// global variable declaration
+a = 1     		// integer
+RED = 0xff0000  // hex
+z = 1.32e3      // fdouble
+v = {100.0, 200.0}  // vector
+
+// functions
+// simple if statement
+ball_is_close() =
+if (ballPos > 400) -> false;
+elif (abs(heading) > rad(70)) -> false;
+else -> true;
+
+// nested if statement
+strategize(gameState) = 
+if (gameState) ->
+    if (ball_in_clear_ball_zone()) -> CLEAR_ALL;
+    elif (ball_in_kick_up_field_zone()) -> KICK_UP_FIELD;
+    else -> SCORE;
+else -> WAIT;
+
+// calculation function
+circleArea(rad) =
+pi * rad * rad;
+
+// TR Node
+find_ball() :-
+ball_seen : ball_frames() > 10 -> eyeLED(RED), approachBall(v) achieves find_ball;
+search_known : last_seen_frame() < 5 -> headspin(LEFT) achieves ball_seen;
+true -> spin_search() achieves search_known;
+
+approach_ball(k) :-
+lined_up : heading() == ballDirection() -> walk_to_point(k) achieves approach_ball;
+true -> align_to_ball(k) achieves lined_up;
+
+walk_to_point(k) :-
+proceed_walk : canWalk() -> doWalk(1,2,1,2) achieves walk_to_point;
+true -> exit(false,'unable to walk') achieves walk_to_point;

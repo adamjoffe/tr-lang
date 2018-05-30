@@ -1,0 +1,3 @@
+main() :- 
+proceed_walk : 0xff0000 -> i < 2 achieves walk_to_point;
+true -> exit(false,"unable to walk") achieves proceed_walk;

@@ -1,0 +1,5 @@
+import loop.tr
+import ../scanner-parser/loop.tr
+
+// purposely fail
+b = THIS_DOESNT_EXIST

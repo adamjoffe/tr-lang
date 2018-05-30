@@ -1,0 +1,3 @@
+init myvar VAR INT
+
+main() :- true -> blackboard.trmodule.myvar.insert(1) achieves main;

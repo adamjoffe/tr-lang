@@ -1,0 +1,5 @@
+func(a) = print(a);
+
+//func(a) :- true -> print(a) achieves func;
+
+main() :- true -> func({1,2}) achieves main;

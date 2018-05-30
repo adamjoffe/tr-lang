@@ -1,0 +1,5 @@
+once {
+	print("only hello world once")
+}
+
+a() :- true -> print("always hello world") achieves a;

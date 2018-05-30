@@ -1,0 +1,10 @@
+pitch_length = 9000
+pitch_width = 4500
+ball_size = 100
+heading = {1,-0.2}
+ballDirection = {-3,2}
+
+pi = 3.1415
+
+abs(heading) = heading + 180 / 360;
+rad(deg) = deg * pi / 180;

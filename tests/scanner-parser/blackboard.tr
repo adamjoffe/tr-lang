@@ -1,0 +1,3 @@
+init mystack STACK INT
+
+a() :- true -> blackboard.trmodule.mystack.get() achieves a;

@@ -1,0 +1,15 @@
+b = 1
+c = 5
+
+f(a) = print(b); // should print 1
+
+node(b) :- 
+true -> f(2),
+		print(c), // should print 5
+		b = 7
+		achieves node;
+
+main() :- 
+true -> node(3), 
+		print(b) // should print 1
+		achieves main;

@@ -1,0 +1,3 @@
+mynode() :- true -> 1 achieves mynode;
+
+main() :- true -> mynode() achieves main;

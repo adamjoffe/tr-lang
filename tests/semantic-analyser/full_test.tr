@@ -1,0 +1,67 @@
+// imports
+import enviro.tr
+import basic.tr
+
+// global variable declaration
+a = 1     				// integer
+RED = 0xff0000  		// hex
+z = not 1.32e3      	// [11] unknown operation for type
+v = {100.0, -200.0}  	// vector
+v = 1					// [2] var declared twice
+bi_var = alpha			// testing built in
+
+// functions
+// simple if statement
+ball_is_close() =
+if (2.1 > 2.0 or not (1.0 > 2.1)) -> false;
+elif (abs(heading) > rad(70)) -> false;
+else -> true;
+
+ball_is_close() = 1; // [3] function declared twice
+
+// nested if statement
+strategize(gameState) = 
+if (gameState) ->
+    if ({1,2} and true) -> CLEAR_ALL; // [12] unknown operation between types
+    elif (ball_is_close()) -> KICK_UP_FIELD;
+    else -> SCORE;
+else -> WAIT;
+
+// calculation function
+circleArea(rad) =
+pi * rad * rad;
+
+
+// TR Node
+walk_to_point(k) :-
+proceed_walk : 2 -> doWalk(1,2,1,2) achieves walk_to_point; // [18] expects boolean in branching
+proceed_walk : true == true -> // [13] conditon name in use
+	a = 2.0, // warning [2] variable changing type
+	circleArea(5)
+	achieves nothing; // [14] condition doesn't exist
+true -> exit(false,'unable to walk') achieves walk_to_point;
+
+walk_to_point() :- // [4] TR Node declared twice
+true -> 1 achieves walk_to_point; // warning [1] unsured variable in expression statement
+
+approach_ball(k) :-
+lined_up : heading == ballDirection -> walk_to_point(circleArea) achieves approach_ball; // [8] function used as variable
+true -> rotate(1,2,v,z), 
+		rotate(1,2), // [16] Not enough arguments
+		rotate(1,2,3,4,5), // [15] Too many arguments
+		RED(), // [10] variable used as function
+		k() // [7] parameter being used as func/TR Node
+		achieves lined_up; 
+
+find_ball() :-
+	ball_seen : ball_frames > 10 -> eyeLED(RED), approach_ball(2) achieves find_ball;
+	search_known : ball_frames < 5 -> 
+		headspin(LEFT), // [5] variable not decalred before use
+		approach_ball // [9] TR node used as variable
+		achieves ball_seen; 
+	true -> spin_search() achieves search_known; // [6] Function/TR Node not declared before use
+
+// [1] main missing error
+main(a) :- true -> find_ball() achieves main; // [17] start node doesn't take parameters
+
+// [19], [20] and [21] require built-ins to test

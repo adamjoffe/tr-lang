@@ -1,0 +1,11 @@
+init count VAR INT
+
+once {
+	blackboard.trmodule.count.insert(40)
+}
+
+
+main() :-
+	inc : blackboard.trmodule.count.get() < 50 -> print(blackboard.trmodule.count.get()), 
+		blackboard.trmodule.count.insert(blackboard.trmodule.count.get() + 1) achieves main;
+	true -> exit(true,"finished counting") achieves main;

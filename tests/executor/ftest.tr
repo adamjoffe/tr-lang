@@ -1,0 +1,11 @@
+b = getVal()
+c = not myBool()
+
+other(a) :-
+	alpha : true -> print("" + b), print("" + c), print("" + b + c) achieves other;
+	true -> print("" + a) achieves alpha;
+
+main() :-
+	alpha : false -> exit(true,"<some exit code here>") achieves main;
+	beta : alpha <= 0 -> other({1,-2}) achieves alpha;
+	true -> print("" + (getVal() <= 4)) achieves beta;

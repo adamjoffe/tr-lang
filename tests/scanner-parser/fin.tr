@@ -1,0 +1,4 @@
+import some.tr
+import trn.tr
+a = 1
+f() = 2;

@@ -1,0 +1,12 @@
+WAIT = 0
+SCORE = 1
+CLEAR_ALL = 2
+KICK_UP_FIELD = 3
+
+ball_frames = 2
+
+eyeLED(color) = "make LED = " + color;
+headspin(dir) = "turning = " + dir;
+
+doWalk(k,p,dt,l) = "walking here";
+rotate(k,p,dt,l) = "rotating";

@@ -1,0 +1,24 @@
+// Nodes that profiler measures
+
+// variable definition
+var-decl
+initialiser
+
+// function definition
+func-decl
+if-stmt
+elif-stmt
+else-stmt
+return-stmt
+
+// TR node
+tr-node
+cond-stmt		(true only)
+cond
+
+// general components
+expr-stmt
+assign-stmt
+exit-stmt
+
+fcall

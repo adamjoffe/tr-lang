@@ -1,0 +1,152 @@
+// Token set
+INTLITERAL      -> digit (digit)*
+BOOLEANLITERAL  -> true | false
+DOUBLELITERAL   -> digit* fraction exponent? | digit+ . | digit+ .? exponent
+HEXLITERAL		-> 0x(digit | [a-f])+
+IMPORTLITERAL   -> ID\.tr
+STRINGLITERAL   -> \'.*\' | \".*\"
+ID              -> letter (letter | digit)*
+letter			-> [A-Za-z_]
+digit			-> [0-9]
+fraction		-> . digit+
+exponent		-> (E | e) (+|-)? digit+
+keywords		-> or | and | not | if | elif | else | achieves | import | exit | blackboard | init | once
+frame-types		-> VAR | STACK | MAP | LIST
+tr-types 		-> INT | DOUBLE | BOOL | STRING | VECTOR
+add				-> +
+subtract		-> -
+multiply		-> *
+divide			-> /
+less-than		-> <
+less-than-eq	-> <=
+greater-than	-> >
+greater-than-eq	-> >=
+EQEQ			-> ==
+NOTEQ   		-> !=
+EQ              -> =
+seperators		-> ; | , | arrow | : | block | { | } | ( | ) | .
+arrow			-> '->'
+block			-> ':-'
+
+
+
+// .tr EBNF
+tr-program      -> tr-prog-list
+tr-prog-list    -> END | blackboard-decl tr-prog-list | var-decl tr-prog-list | func-decl tr-prog-list | tr-node tr-prog-list | once-decl tr-prog-list
+
+// imports - handled by the scanner, not in literal parser
+imports 		-> 'import' IMPORTLITERAL
+
+// blackboard definition
+blackboard-decl	-> 'init' identifier frame-type tr-type
+struct-type 	-> 'VAR' | 'STACK' | 'MAP' | 'LIST'
+tr-type 		-> 'INT' | 'DOUBLE' | 'BOOL' | 'STRING' | 'VECTOR'
+
+// variable definition
+var-decl        -> identifier '=' initialiser
+initialiser		-> expr
+
+// function definition
+func-decl		-> identifier '(' para-list-opt ')' '=' stmt
+stmt 			-> logic-stmt | return-stmt
+logic-stmt 		-> if-stmt
+if-stmt			-> 'if' '(' expr ')' '->' stmt otherwise-stmt
+otherwise-stmt	-> else-stmt | elif-stmt otherwise-stmt
+elif-stmt       -> 'elif' '(' expr ')' '->' stmt
+else-stmt 		-> 'else' '->' stmt
+return-stmt		-> expr ';'
+
+// TR node
+tr-node	        -> identifier '(' para-list-opt ')' ':-' cond-stmt
+cond-stmt		-> 'true' action-stmt | cond cond-stmt
+cond 			-> identifier ':' expr action-stmt
+action-stmt     -> '->' action-list regr-stmt ';'
+regr-stmt		-> 'achieves' identifier
+action-list		-> action | action ',' action-list
+action          -> expr-stmt | assign-stmt | exit-stmt
+
+// once definition
+once-decl 		-> "once" "{" action-list "}"
+
+// general components
+identifier      -> 'ID'
+
+para-list-opt   -> para-list | e
+para-list		-> para-decl | para-decl ',' para-list
+para-decl		-> identifier
+arg-list-opt    -> arg-list | e
+arg-list		-> arg | arg ',' arg-list
+arg     		-> expr
+
+expr-stmt       -> expr
+assign-stmt     -> identifier "=" expr
+exit-stmt		-> 'exit' '(' BOOLEANLITERAL ')' | 'exit' '(' BOOLEANLITERAL ',' STRINGLITERAL ')'
+// potential upgrade - first expr, must resolve to boolean, and second to string
+exit-stmt		-> 'exit' '(' expr ')' | 'exit' '(' expr ',' expr ')'
+
+expr            -> or-expr
+or-expr	        -> and-expr | or-expr 'or' and-expr
+and-expr	    -> equality-expr | and-expr 'and' equality-expr
+equality-expr	-> rel-expr | equality-expr '==' rel-expr | equality-expr '!=' rel-expr
+rel-expr		-> additive-expr | rel-expr '<' additive-expr | rel-expr '<=' additive-expr | rel-expr '>' additve-expr | rel-expr '>=' additive-expr
+additive-expr	-> mult-expr | additive-expr '+' mult-expr | additive-expr '-' mult-expr
+mult-expr	    -> unary-expr | mult-expr '*' unary-expr | mult-expr '/' unary-expr
+unary-expr		-> '+' unary-expr | '-' unary-expr | 'not' unary-expr | primary-expr
+primary-expr	-> fcall | bbcall | var-expr | '(' expr ')' | literal-expr
+
+fcall           -> identifier '(' arg-list-opt ')'
+bbcall 			-> 'blackboard' '.' identifier '.' identifier '.' identifier '(' arg-list-opt ')'
+var-expr        -> identifier
+literal-expr    -> INTLITERAL | BOOLEANLITERAL | DOUBLELITERAL | STRINGLITERAL | vectorliteral
+
+vectorliteral	-> "{" vval "," vval "}"
+vval			-> vlit | '+' vval | '-' vval
+vlit 			-> DOUBLELITERAL | INTLITERAL
+
+// TODO: maybe make regression statement on true optional
+
+
+e.g.
+
+// imports
+import enviro.tr
+import basic.tr
+
+// global variable declaration
+a = 1     		// integer
+RED = 0xff0000  // hex
+z = 1.32e3      // fdouble
+v = {100.0, 200.0}  // vector
+
+// functions
+// simple if statement
+ball_is_close() =
+if (ballPos > 400) -> false;
+elif (abs(heading) > rad(70)) -> false;
+else -> true;
+
+// nested if statement
+strategize(gameState) = 
+if (gameState) ->
+    if (ball_in_clear_ball_zone()) -> CLEAR_ALL;
+    elif (ball_in_kick_up_field_zone()) -> KICK_UP_FIELD;
+    else -> SCORE;
+else -> WAIT;
+
+// calculation function
+circleArea(rad) =
+pi * rad * rad;
+
+// TR Node
+find_ball() :-
+ball_seen(ball_frames() > 10) -> eyeLED(RED), approachBall(v) : achieves find_ball;
+search_known(last_seen_frame() < 5) -> headspin(LEFT) : achieves ball_seen;
+true -> spin_search() : achieves search_known;
+
+approach_ball(k) :-
+lined_up (heading() == ballDirection()) -> walk_to_point(k) : achieves approach_ball;
+true -> align_to_ball(k) : achieves lined_up;
+
+walk_to_point(k) :-
+proceed_walk (canWalk()) -> doWalk(1,2,1,2) : achieves walk_to_point;
+true -> exit(false,'unable to walk') : achieves walk_to_point;

@@ -1,0 +1,9 @@
+print_wrapper(a) = print("" + a);
+
+number_comp(n) =
+	if (n > 80) -> print("n is > 80: " + n);
+	elif (n > 20 and n <= 80) -> print ("n is in the middle: " + n);
+	else -> print("n is small: " + n);
+
+main() :- 
+	true -> print_wrapper("starting test:"), number_comp(rand()) : achieves main;

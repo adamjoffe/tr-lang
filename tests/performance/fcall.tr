@@ -1,0 +1,3 @@
+myfunc(a) = a;
+
+main() :- true -> myfunc(12) achieves main;

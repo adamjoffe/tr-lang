@@ -1,0 +1,14 @@
+init mystack STACK INT
+init mystack MAP INT // can't have same name
+init strmap MAP STRING
+init vlist LIST VECTOR
+
+a() :- true -> blackboard.nomodule.frame.get() achieves a;
+
+b() :- true -> blackboard.trmodule.noframe.get() achieves b;
+
+c() :- true -> blackboard.trmodule.mystack.nofunc() achieves c;
+
+d() :- true -> blackboard.trmodule.mystack.insert(1) achieves d;
+
+e() :- true -> blackboard.trmodule.mystack.get() achieves e;

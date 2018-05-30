@@ -1,0 +1,3 @@
+main() :-
+check_count : myCount > 2500 -> exit(true) achieves main;
+true -> print("hello world, i'm " + myCount), myCount = myCount + 1 achieves main;

@@ -1,0 +1,22 @@
+init mystack VAR INT
+
+f() = print("");
+
+a() :- true -> f(), exit(false) achieves a;
+
+b() :- 
+	b1 : true -> f() achieves b;
+	true -> print("") achieves b;
+
+c() :- 
+	true -> blackboard.trmodule.mystack.insert(1) achieves c;
+
+split() :- 
+	c1 : true -> a() achieves split;
+	c2 : false -> b() achieves split;
+	true -> b(), c() achieves split;
+
+main() :-
+	c1 : true -> a(), c() achieves main;
+	c2 : false -> main() achieves main;
+	true -> split() achieves main;
