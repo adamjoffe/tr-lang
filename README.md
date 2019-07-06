@@ -11,3 +11,15 @@ tr-lang was implemented with an interpreter so that *.tr* source code files can 
 
 Finally, tr-lang provides a blackboard data structure that can easily be shared between the tr-lang and C/C++ layer allowing for a concurrency safe method of sharing data. For example, platform localisation information computed by C/C++ layer can be provided in the data structure to be used by the tr-lang layer for making behavioural decisions. Example blackboard structure: <br />
 ![Example Struture](https://github.com/adamjoffe/tr-lang/blob/master/doc/Blackboard_Structure.jpg)
+
+## Language Definition
+The language syntax is defined in the [Extended Backus-Naur Form (EBNF)](doc/EBNF)
+
+## Tools
+
+### Profiler
+
+### Drawer
+
+### Debugger
+
