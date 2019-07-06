@@ -1,7 +1,7 @@
 # tr-lang
 
 ### Author - Adam Joffe - Joffeadamf@gmail.com
-Designed and implemented as part of Undergraduate Engineering Honours Thesis - [Teleo-Reactive Language for Reactive Agent Behaviour](/adamjoffe/tr-lang/doc/Adam_Joffe_BEng_Honours_Thesis)
+Designed and implemented as part of Undergraduate Engineering Honours Thesis - [Teleo-Reactive Language for Reactive Agent Behaviour](https://github.com/adamjoffe/tr-lang/blob/master/doc/Adam_Joffe_BEng_Honours_Thesis.pdf)
 
 ## Overview
 tr-lang (short for Teleo-Reactive Language) is an interpreted, high-level, dynamically typed, domain specific language (DSL) for short for Reactive Agent Behaviour. Based on the Teleo-Reactive programs concepts as described by [Nils Nilsson](https://www.jair.org/index.php/jair/article/view/10112), the language allows rapid development of complex hierarchical based agent behaviour for real-time robotic platforms.
