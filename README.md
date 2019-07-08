@@ -31,6 +31,7 @@ namespace TR {
 ```
 
 ## Tools
+tr-lang also provides a number of tools to aid with development on behaviours and ensure runtime performance is optimised. The profiler, to measure execution number and time of code components, the drawer, to output a tree diagram of the hierarchical behaviour implemented in the code, and the debugger, to help understand program flow during execution.
 
 ### Profiler
 
